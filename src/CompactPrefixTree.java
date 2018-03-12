@@ -221,6 +221,8 @@ public class CompactPrefixTree implements Dictionary {
             while(count < numSuggestions) {
                 if (searchSuffix(result, node, prefixAtNode) != null) {
                     result[count] = prefixAtNode + searchSuffix(result, node, prefixAtNode);
+                } else {
+                    return suggestHelper(word.substring(0, word.length() - 2), "", numSuggestions, root);
                 }
                 count++;
             }
@@ -239,6 +241,8 @@ public class CompactPrefixTree implements Dictionary {
                 while (count < numSuggestions) {
                     if (searchSuffix(result, node, prefixAtNode) != null) {
                         result[count] = prefixAtNode + searchSuffix(result, node, prefixAtNode);
+                    } else {
+                        return suggestHelper(word.substring(0, word.length() - 2), "", numSuggestions, root);
                     }
                     count++;
                 }
@@ -267,6 +271,7 @@ public class CompactPrefixTree implements Dictionary {
         }
 
         int count = 0;
+        prefixAtNode = prefixAtNode + node.prefix;
         while(count < node.children.length) {
             Node newNode = node.children[count];
             if(newNode != null && searchSuffix(array, newNode, prefixAtNode) != null) {
